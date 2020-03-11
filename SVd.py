@@ -2,6 +2,7 @@
 # Singular Value Decomposition
 import numpy as np
 from timeit import default_timer as timer
+
 np.set_printoptions(precision=3)
 np.set_printoptions(suppress=True)  #NOT in scientific notation
 
@@ -19,17 +20,17 @@ start = timer()
 W1=np.dot(np.transpose(A),A)
 W2=np.dot(A,np.transpose(A))
 
-E_V,V=np.linalg.eigh(W1)
-idx = E_V.argsort()[::-1]   
+E_V,V=np.linalg.eigh(W1)	#This is done to arrange the eigenvalues and corresponding 
+idx = E_V.argsort()[::-1]   	#eigenvectors in descending order.
 E_V = E_V[idx]
 V = V[:,idx]
 
-E_U,U=np.linalg.eigh(W2)
+E_U,U=np.linalg.eigh(W2)	#Same thing over here
 idx = E_U.argsort()[::-1]   
 E_U = E_U[idx]
 U = U[:,idx]
 
-S1=np.zeros(A.shape)
+S1=np.zeros(A.shape)		#Initialise an empty matrix of the same size as A 
 if (m>=n):
 	S1[:n,:n]=np.diag(np.sqrt(E_V))
 else:
@@ -42,6 +43,7 @@ end = timer()
 print("\nTime elapsed (in sec) without using linalg.svd = ",end - start)
 
 ##################################################################
+#In this part I do the SVD using the in-built python function
 start = timer()
 u, s, vT = np.linalg.svd(A)
 l=min(m,n)
